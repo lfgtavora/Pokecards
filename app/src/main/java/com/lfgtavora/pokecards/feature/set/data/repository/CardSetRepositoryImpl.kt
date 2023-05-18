@@ -1,8 +1,10 @@
 package com.lfgtavora.pokecards.feature.set.data.repository
 
-import com.lfgtavora.pokecards.feature.set.data.datasource.CardSetsRemoteDataSource
+import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSource
 import com.lfgtavora.pokecards.feature.set.data.domain.CardSet
+import com.lfgtavora.pokecards.feature.set.data.response.CardDto
 import com.lfgtavora.pokecards.feature.set.data.response.CardSetsDto
+import com.lfgtavora.pokecards.feature.set.data.response.CardsDto
 import com.lfgtavora.pokecards.feature.set.data.response.asDomain
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,7 +17,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 data class CardSetRepositoryImpl @Inject constructor(
-    private val cardSetsRemoteDataSource: CardSetsRemoteDataSource,
+    private val pokemonTcgRemoteDataSource: PokemonTcgRemoteDataSource,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : CardSetRepository {
 
@@ -25,10 +27,23 @@ data class CardSetRepositoryImpl @Inject constructor(
     override suspend fun filterSets(query: String) =
         TODO()
 
-    override fun paginateSets(page: Int, pageSize: Int): Flow<List<CardSet>> = flow {
+    override fun paginateSets(
+        page: Int,
+        pageSize: Int
+    ): Flow<List<CardSet>> = flow {
         emit(
-            cardSetsRemoteDataSource.paginateSets(page, pageSize)
+            pokemonTcgRemoteDataSource.paginateSets(page, pageSize)
         )
     }.map(CardSetsDto::asDomain).flowOn(dispatcher)
+
+    override fun paginateCards(
+        setId: String,
+        page: Int,
+        pageSize: Int
+    ): Flow<List<CardDto>> = flow {
+        emit(
+            pokemonTcgRemoteDataSource.paginateCards(setId, page, pageSize)
+        )
+    }.map { it.cards }.flowOn(dispatcher)
 
 }

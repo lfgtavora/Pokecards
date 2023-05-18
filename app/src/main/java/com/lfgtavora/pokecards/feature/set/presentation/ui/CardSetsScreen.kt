@@ -17,13 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.lfgtavora.pokecards.feature.set.data.domain.CardSet
-import com.lfgtavora.pokecards.feature.set.data.response.CardSetDto
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.FeedUiState
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.SetViewModel
-import java.text.SimpleDateFormat
 
 @Composable
 internal fun CardSetsScreenRoute(
+    onCardClicked: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SetViewModel = hiltViewModel(),
 ) {
@@ -31,7 +30,7 @@ internal fun CardSetsScreenRoute(
 
     CardSetsScreen(
         feedState = feedState,
-        onClick = viewModel::navigateToSetDetails,
+        onCardClicked = onCardClicked,
         modifier = modifier
     )
 }
@@ -39,7 +38,7 @@ internal fun CardSetsScreenRoute(
 @Composable
 fun CardSetsScreen(
     feedState: FeedUiState,
-    onClick: () -> Unit,
+    onCardClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -50,7 +49,7 @@ fun CardSetsScreen(
 
             is FeedUiState.Success -> CardSetsList(
                 cardSetList = feedState.cardSets,
-                onClick = onClick
+                onClick = onCardClicked
             )
             is FeedUiState.Error -> Text(text = "deu ruim")
             is FeedUiState.Loading -> Column(

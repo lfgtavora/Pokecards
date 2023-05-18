@@ -22,6 +22,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.lfgtavora.pokecards.feature.set.navigation.cardSetsNavigationRoute
 import com.lfgtavora.pokecards.feature.set.navigation.cardSetsScreen
+import com.lfgtavora.pokecards.feature.setdetail.navigation.cardSetDetailNavGraph
+import com.lfgtavora.pokecards.feature.setdetail.navigation.navigateToCardSetDetailGraph
 
 @Composable
 fun PokeCardsNavHost(
@@ -35,6 +37,9 @@ fun PokeCardsNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        cardSetsScreen()
+        cardSetsScreen(
+            onCardClicked = navController::navigateToCardSetDetailGraph
+        )
+        cardSetDetailNavGraph()
     }
 }

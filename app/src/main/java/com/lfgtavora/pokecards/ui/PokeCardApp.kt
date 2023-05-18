@@ -1,5 +1,8 @@
 package com.lfgtavora.pokecards.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,13 +21,19 @@ fun PokeCardApp(
 ) {
     Scaffold(
         bottomBar = {
-            BottomAppBar {
-                PokeCardsBottomBar(
-                    items = appState.bottomBarItems,
-                    onNavigateToTab = appState::navigateToTab,
-                    currentDestination = appState.currentDestination,
-                    modifier = Modifier
-                )
+            AnimatedVisibility(
+                visible = appState.shouldShowBottomBar,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it }),
+            ) {
+                BottomAppBar {
+                    PokeCardsBottomBar(
+                        items = appState.bottomBarItems,
+                        onNavigateToTab = appState::navigateToTab,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier
+                    )
+                }
             }
         }
     ) { padding ->

@@ -1,8 +1,8 @@
 package com.lfgtavora.pokecards.di
 
 import com.lfgtavora.pokecards.data.remote.PokemonTcgApi
-import com.lfgtavora.pokecards.feature.set.data.datasource.CardSetsRemoteDataSource
-import com.lfgtavora.pokecards.feature.set.data.datasource.CardSetsRemoteDataSourceImpl
+import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSource
+import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSourceImpl
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepositoryImpl
 import com.lfgtavora.pokecards.feature.set.domain.usecase.GetAllSetsByDateUseCase
@@ -24,13 +24,13 @@ object AppModule {
     @Provides
     fun provideCardSetsRemoteDataSource(
         api: PokemonTcgApi
-    ): CardSetsRemoteDataSource = CardSetsRemoteDataSourceImpl(api)
+    ): PokemonTcgRemoteDataSource = PokemonTcgRemoteDataSourceImpl(api)
 
     @Singleton
     @Provides
     fun provideCardSetRepository(
-        cardSetsRemoteDataSource: CardSetsRemoteDataSource
-    ): CardSetRepository = CardSetRepositoryImpl(cardSetsRemoteDataSource)
+        pokemonTcgRemoteDataSource: PokemonTcgRemoteDataSource
+    ): CardSetRepository = CardSetRepositoryImpl(pokemonTcgRemoteDataSource)
 
     @Singleton
     @Provides

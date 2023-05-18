@@ -36,6 +36,10 @@ class PokeCardAppState(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
+    val shouldShowBottomBar: Boolean
+        @Composable get() = BottomBarItem.values().any { it.route == currentDestination?.route }
+
+
 //    val currentTopLevelDestination: TopLevelDestination?
 //        @Composable get() = when (currentDestination?.route) {
 //            forYouNavigationRoute -> FOR_YOU
@@ -53,7 +57,7 @@ class PokeCardAppState(
             restoreState = true
         }
 
-        when(bottomBarItem) {
+        when (bottomBarItem) {
             BottomBarItem.ALL_SETS -> navController.navigateToCardSets(navOptions)
         }
     }
