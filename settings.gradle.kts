@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "Pokecards"
 include(":app")
 include(":core:network")
+include(":core:data")
+include(":core:model")
+include(":feature:set")

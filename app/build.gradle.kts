@@ -46,7 +46,7 @@ android {
             compose = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = "1.2.0"
+            kotlinCompilerExtensionVersion = "1.4.3"
         }
         packagingOptions {
             resources {
@@ -67,7 +67,7 @@ android {
         implementation("androidx.compose.material3:material3:1.0.0-alpha11")
         implementation("androidx.navigation:navigation-compose:2.5.3")
         implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-        implementation("androidx.paging:paging-compose:1.0.0-alpha17")
+        implementation("androidx.paging:paging-compose:3.2.0-rc01")
 
         //IMAGE
         implementation("io.coil-kt:coil-compose:2.2.2")
@@ -80,6 +80,14 @@ android {
         implementation("com.squareup.retrofit2:retrofit:2.9.0")
         implementation("com.squareup.retrofit2:converter-gson:2.9.0")
         implementation("com.google.code.gson:gson:2.10.1")
+
+
+        //Room
+        val roomVersion = "2.5.1"
+        implementation("androidx.room:room-runtime:$roomVersion")
+        implementation("androidx.room:room-ktx:$roomVersion")
+        implementation("androidx.room:room-paging:$roomVersion")
+        kapt("androidx.room:room-compiler:$roomVersion")
 
         //testing
         testImplementation("junit:junit:4.13.2")

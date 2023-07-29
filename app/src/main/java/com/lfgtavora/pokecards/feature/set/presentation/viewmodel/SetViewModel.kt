@@ -2,13 +2,10 @@ package com.lfgtavora.pokecards.feature.set.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lfgtavora.pokecards.feature.set.data.domain.CardSet
-import com.lfgtavora.pokecards.feature.set.data.response.CardSetDto
-import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
+import com.lfgtavora.pokecards.feature.set.data.domain.Set
 import com.lfgtavora.pokecards.feature.set.domain.usecase.GetAllSetsByDateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,12 +22,6 @@ class SetViewModel @Inject constructor(
                 initialValue = FeedUiState.Loading,
             )
 
-    fun navigateToSetDetails() {
-        viewModelScope.launch {
-
-        }
-    }
-
     companion object {
         const val DEFAULT_PAGE_SIZE = 16
     }
@@ -38,7 +29,7 @@ class SetViewModel @Inject constructor(
 }
 
 sealed interface FeedUiState {
-    data class Success(val cardSets: List<CardSet>) : FeedUiState
+    data class Success(val sets: List<Set>) : FeedUiState
     object Error : FeedUiState
     object Loading : FeedUiState
 }

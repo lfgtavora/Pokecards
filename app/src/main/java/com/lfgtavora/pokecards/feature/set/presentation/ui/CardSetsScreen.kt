@@ -16,13 +16,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.lfgtavora.pokecards.feature.set.data.domain.CardSet
+import com.lfgtavora.pokecards.feature.set.data.domain.Set
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.FeedUiState
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.SetViewModel
 
 @Composable
 internal fun CardSetsScreenRoute(
-    onCardClicked: () -> Unit,
+    onSetClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SetViewModel = hiltViewModel(),
 ) {
@@ -30,7 +30,7 @@ internal fun CardSetsScreenRoute(
 
     CardSetsScreen(
         feedState = feedState,
-        onCardClicked = onCardClicked,
+        onClick = onSetClick,
         modifier = modifier
     )
 }
@@ -38,7 +38,7 @@ internal fun CardSetsScreenRoute(
 @Composable
 fun CardSetsScreen(
     feedState: FeedUiState,
-    onCardClicked: () -> Unit,
+    onClick: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -48,9 +48,10 @@ fun CardSetsScreen(
         when (feedState) {
 
             is FeedUiState.Success -> CardSetsList(
-                cardSetList = feedState.cardSets,
-                onClick = onCardClicked
+                setList = feedState.sets,
+                onClick = onClick
             )
+
             is FeedUiState.Error -> Text(text = "deu ruim")
             is FeedUiState.Loading -> Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,8 +66,8 @@ fun CardSetsScreen(
 
 @Composable
 fun CardSetsList(
-    cardSetList: List<CardSet>,
-    onClick: () -> Unit
+    setList: List<Set>,
+    onClick: (String, String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -75,7 +76,7 @@ fun CardSetsList(
         contentPadding = PaddingValues(16.dp),
     ) {
         items(
-            items = cardSetList,
+            items = setList,
             key = { item -> item.id }
         ) { item ->
             CardSetItem(onClick, item)
@@ -86,12 +87,12 @@ fun CardSetsList(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun CardSetItem(
-    onClick: () -> Unit,
-    item: CardSet
+    onClick: (String, String) -> Unit,
+    item: Set
 ) {
     Card(modifier = Modifier
         .clip(RoundedCornerShape(10.dp))
-        .clickable { onClick() }) {
+        .clickable { onClick(item.id, item.name) }) {
         Column(
             modifier = Modifier.height(100.dp),
             verticalArrangement = Arrangement.Center,

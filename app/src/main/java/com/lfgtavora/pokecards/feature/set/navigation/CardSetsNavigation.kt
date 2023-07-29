@@ -13,10 +13,10 @@ fun NavController.navigateToCardSets(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.cardSetsScreen(
-    onCardClicked: () -> Unit,
+    onSetClick: (String, String) -> Unit,
 ) {
     composable(route = cardSetsNavigationRoute) {
-        CardSetsScreenRoute(onCardClicked = onCardClicked)
+        CardSetsScreenRoute(onSetClick = onSetClick)
     }
 }
 

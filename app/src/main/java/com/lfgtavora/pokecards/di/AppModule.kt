@@ -1,5 +1,8 @@
 package com.lfgtavora.pokecards.di
 
+import android.content.Context
+import androidx.room.Room
+import com.lfgtavora.pokecards.data.local.AppDatabase
 import com.lfgtavora.pokecards.data.remote.PokemonTcgApi
 import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSource
 import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSourceImpl
@@ -11,6 +14,7 @@ import com.lfgtavora.pokecards.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,6 +30,16 @@ object AppModule {
         api: PokemonTcgApi
     ): PokemonTcgRemoteDataSource = PokemonTcgRemoteDataSourceImpl(api)
 
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "pokemontcg.db"
+        ).build()
+    }
+
     @Singleton
     @Provides
     fun provideCardSetRepository(
@@ -37,6 +51,7 @@ object AppModule {
     fun provideGetAllSetsByDateUseCaseImpl(
         cardSetRepository: CardSetRepository
     ): GetAllSetsByDateUseCase = GetAllSetsByDateUseCaseImpl(cardSetRepository)
+
 
     @Singleton
     @Provides

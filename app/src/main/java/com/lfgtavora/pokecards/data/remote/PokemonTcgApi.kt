@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.data.remote
 
 import com.lfgtavora.pokecards.feature.set.data.response.CardSetDto
 import com.lfgtavora.pokecards.feature.set.data.response.CardSetsDto
-import com.lfgtavora.pokecards.feature.set.data.response.CardsDto
+import com.lfgtavora.pokecards.feature.set.data.response.PaginationCardsDto
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -30,11 +30,11 @@ interface PokemonTcgApi {
     ): CardSetsDto
 
     @GET(CARDS)
-    fun paginateCards(
-        @Query("setId") id: String,
+    suspend fun paginateCards(
+        @Query("q") id: String,
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
-    ): CardsDto
+    ): PaginationCardsDto
 
     companion object {
         private const val SETS = "sets"

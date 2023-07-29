@@ -20,22 +20,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokecardsTheme {
                 PokeCardApp()
-//                val navController = rememberNavController()
-//                NavHost(
-//                    navController = navController,
-//                    startDestination = "decks_list_screen"
-//                ) {
-//                    composable(
-//                        route = "decks_list_screen"
-//                    ) {
-//
-//                    }
-//                    composable(
-//                        route = "deck_detail_screen"
-//                    ) {
-//
-//                    }
-//                }
             }
         }
     }

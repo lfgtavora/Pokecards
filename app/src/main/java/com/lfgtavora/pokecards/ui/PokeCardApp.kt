@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.lfgtavora.pokecards.navigation.BottomBarItem
@@ -47,7 +47,7 @@ fun PokeCardApp(
                     ),
                 ),
         ) {
-            PokeCardsNavHost(navController = appState.navController, onBackClick = { /*TODO*/ })
+            PokeCardsNavHost(navController = appState.navController)
         }
     }
 }
@@ -90,3 +90,16 @@ private fun NavDestination?.isActiveRoute(destination: String) =
     this?.hierarchy?.any {
         it.route?.equals(destination) ?: false
     } ?: false
+
+
+@Preview
+@Composable
+private fun PokeCardsBottomBarPreview() {
+    BottomAppBar {
+        PokeCardsBottomBar(
+            items = BottomBarItem.values().asList(),
+            onNavigateToTab = {},
+            currentDestination = null,
+        )
+    }
+}

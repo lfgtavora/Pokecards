@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.domain
 
 import java.util.*
 
-data class CardSet(
+data class Set(
     val id: String,
     val name: String,
     val releaseDate: Date?,

@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.domain.CardSet
+import com.lfgtavora.pokecards.feature.set.data.domain.Set
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +30,7 @@ data class CardSetDto(
 )
 
 fun CardSetDto.asDomain() =
-    CardSet(
+    Set(
         id = id,
         name = name,
         releaseDate = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).parse(releaseDate),
