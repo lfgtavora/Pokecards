@@ -7,7 +7,7 @@ data class CardSetsDto(
     @SerializedName("count")
     val count: Int,
     @SerializedName("data")
-    val cardSets: List<CardSetDto>,
+    val cardSets: List<SetDto>,
     @SerializedName("page")
     val page: Int = 1,
     @SerializedName("pageSize")
@@ -16,5 +16,5 @@ data class CardSetsDto(
     val totalCount: Int
 )
 
-fun CardSetsDto.asDomain() =
-    cardSets.map(CardSetDto::asDomain)
+fun CardSetsDto.asEntity() =
+    cardSets.map(SetDto::asEntity)

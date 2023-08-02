@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSource
 import com.lfgtavora.pokecards.feature.set.data.response.CardDto
-import com.lfgtavora.pokecards.feature.set.data.response.CardSetDto
 import retrofit2.HttpException
 import java.io.IOException
 

@@ -4,7 +4,7 @@ data class Card(
     val id: String,
     val image: Image,
     val name: String,
-    val set: Set
+    val setEntity: SetEntity
 )
 
 class Image(

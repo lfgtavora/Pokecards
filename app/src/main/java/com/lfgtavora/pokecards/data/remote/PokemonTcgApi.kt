@@ -1,6 +1,6 @@
 package com.lfgtavora.pokecards.data.remote
 
-import com.lfgtavora.pokecards.feature.set.data.response.CardSetDto
+import com.lfgtavora.pokecards.feature.set.data.response.SetDto
 import com.lfgtavora.pokecards.feature.set.data.response.CardSetsDto
 import com.lfgtavora.pokecards.feature.set.data.response.PaginationCardsDto
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ interface PokemonTcgApi {
     @GET("$SETS/{id}")
     suspend fun getSet(
         @Path("id") id: String
-    ): Flow<CardSetDto>
+    ): Flow<SetDto>
 
     @GET(SETS)
     suspend fun filterSets(

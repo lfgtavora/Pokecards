@@ -3,7 +3,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Prices(
+data class PricesDto(
     @SerializedName("averageSellPrice")
     val averageSellPrice: Double?,
     @SerializedName("avg1")

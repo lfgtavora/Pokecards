@@ -1,6 +1,6 @@
 package com.lfgtavora.pokecards.feature.set.domain.usecase
 
-import com.lfgtavora.pokecards.feature.set.data.domain.Set
+import com.lfgtavora.pokecards.feature.set.data.local.SetEntity
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -10,7 +10,7 @@ class GetAllSetsByDateUseCaseImpl @Inject constructor(
     private val repository: CardSetRepository,
 ) : GetAllSetsByDateUseCase {
 
-    override operator fun invoke(): Flow<List<Set>> =
+    override operator fun invoke(): Flow<List<SetEntity>> =
         repository.paginateSets().map { sets ->
             sets.sortedByDescending { it.releaseDate }
         }

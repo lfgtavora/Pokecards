@@ -2,17 +2,16 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.domain.Set
-import java.text.SimpleDateFormat
+import com.lfgtavora.pokecards.feature.set.data.local.SetEntity
 import java.util.*
 
-data class CardSetDto(
+data class SetDto(
     @SerializedName("id")
     val id: String,
     @SerializedName("images")
-    val imagesDto: ImagesDto,
+    val imagesSet: ImagesSetDto,
     @SerializedName("legalities")
-    val legalitiesDto: LegalitiesDto,
+    val legalities: LegalitiesSetDto,
     @SerializedName("name")
     val name: String,
     @SerializedName("printedTotal")
@@ -29,12 +28,15 @@ data class CardSetDto(
     val updatedAt: String
 )
 
-fun CardSetDto.asDomain() =
-    Set(
-        id = id,
-        name = name,
-        releaseDate = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).parse(releaseDate),
-        total = total,
-        logo = imagesDto.logo,
-        symbol = imagesDto.symbol
-    )
+fun SetDto.asEntity() = SetEntity(
+    id = id,
+    name = name,
+    releaseDate = releaseDate,
+    total = total,
+    images = imagesSet.asEntity(),
+    legalities = legalities.asEntity(),
+    printedTotal = printedTotal,
+    updatedAt = updatedAt,
+    series = series,
+    ptcgoCode = ptcgoCode
+)

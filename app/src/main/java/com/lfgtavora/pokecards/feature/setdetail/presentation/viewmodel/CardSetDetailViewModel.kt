@@ -1,53 +1,84 @@
 package com.lfgtavora.pokecards.feature.setdetail.presentation.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import androidx.paging.map
-import com.lfgtavora.pokecards.data.local.AppDatabase
-import com.lfgtavora.pokecards.feature.set.data.CardRemoteMediator
-import com.lfgtavora.pokecards.feature.set.data.domain.Card
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
 import com.lfgtavora.pokecards.feature.set.data.response.CardDto
+import com.lfgtavora.pokecards.pagination.DefaultPaginator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class CardSetDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     cardSetRepository: CardSetRepository,
-    appDatabase: AppDatabase
 ) : ViewModel() {
 
-    private val setId: String = checkNotNull(savedStateHandle["id"])
+    private var setId: String = checkNotNull(savedStateHandle["id"])
+    private var page = 1
+    var paginationReachedEnd = false
 
-    @OptIn(ExperimentalPagingApi::class)
-    val paginateCards = Pager(
-        config = PagingConfig(
-            pageSize = PAGE_SIZE,
-            prefetchDistance = PREFETCH_DISTANCE,
-            initialLoadSize = PAGE_SIZE,
-        ),
-        pagingSourceFactory = {
-            appDatabase.cardDao.pagingSource()
+    private var _uiState: MutableState<SetDetailUiState> = mutableStateOf(SetDetailUiState.Loading)
+    val uiState = _uiState
+
+    private val paginator = DefaultPaginator(
+        initialKey = page,
+        onLoadUpdated = {
+            if (page != 1) {
+                _uiState.value =
+                    (_uiState.value as SetDetailUiState.Success).copy(isPaginating = true).copy()
+
+            }
         },
-        remoteMediator = CardRemoteMediator(
-            setId = setId,
-            cardRepository = cardSetRepository,
-        )
+        onRequest = { nextPage ->
+            cardSetRepository.paginateCards(setId, page, PAGE_SIZE)
+        },
+        getNextKey = {
+            page++
+            page
+        },
+        onError = { error ->
+            _uiState.value = SetDetailUiState.Error(error?.localizedMessage)
+        },
+        onSuccess = { result, newKey ->
+            if (page == 1)
+                _uiState.value =
+                    SetDetailUiState.Success(result.data.toMutableList(), isPaginating = false)
+                        .copy()
+            else {
+                val updatedCards = (_uiState.value as SetDetailUiState.Success).copy().cards.apply {
+                    addAll(
+                        result.data
+                    )
+                }
+                _uiState.value =
+                    (_uiState.value as SetDetailUiState.Success).copy( cards = updatedCards,
+                        isPaginating = false)
+
+            }
+            paginationReachedEnd = result.count < result.pageSize
+
+        }
     )
-        .flow
-        .cachedIn(viewModelScope)
+
+    init {
+        loadNextItems()
+    }
+
+    fun loadNextItems() {
+        if (paginationReachedEnd.not()) {
+            viewModelScope.launch {
+                paginator.loadNextItems()
+            }
+        }
+    }
 
     companion object {
         private const val PAGE_SIZE = 32
@@ -57,7 +88,10 @@ class CardSetDetailViewModel @Inject constructor(
 }
 
 sealed interface SetDetailUiState {
-    data class Success(val cards: MutableList<CardDto>) : SetDetailUiState
-    object Error : SetDetailUiState
     object Loading : SetDetailUiState
+    data class Error(val message: String?, val page: Int = 1) : SetDetailUiState
+    data class Success(
+        val cards: MutableList<CardDto>,
+        var isPaginating: Boolean = false
+    ) : SetDetailUiState
 }

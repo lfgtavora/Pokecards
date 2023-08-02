@@ -12,9 +12,9 @@ interface CardDao {
     @Upsert
     suspend fun upsertAll(cards: List<CardEntity>)
 
-    @Query("SELECT * FROM cardentity")
+    @Query("SELECT * FROM cards")
     fun pagingSource(): PagingSource<Int, CardEntity>
 
-    @Query("DELETE FROM cardentity")
+    @Query("DELETE FROM cards")
     suspend fun clearAll()
 }

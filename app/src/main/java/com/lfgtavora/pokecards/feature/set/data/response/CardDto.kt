@@ -2,14 +2,15 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.lfgtavora.pokecards.feature.set.data.local.CardEntity
 
 data class CardDto(
     @SerializedName("abilities")
-    val abilities: List<Ability>?,
+    val abilities: List<AbilityDto>?,
     @SerializedName("artist")
     val artist: String,
     @SerializedName("attacks")
-    val attacks: List<Attack>,
+    val attacks: List<AttackDto>?,
     @SerializedName("cardmarket")
     val cardmarket: Cardmarket,
     @SerializedName("convertedRetreatCost")
@@ -25,9 +26,9 @@ data class CardDto(
     @SerializedName("id")
     val id: String,
     @SerializedName("images")
-    val images: Images,
+    val images: ImagesCardDto,
     @SerializedName("legalities")
-    val legalities: Legalities,
+    val legalitiesDto: LegalitiesDto,
     @SerializedName("name")
     val name: String,
     @SerializedName("nationalPokedexNumbers")
@@ -41,15 +42,41 @@ data class CardDto(
     @SerializedName("rules")
     val rules: List<String>?,
     @SerializedName("set")
-    val set: CardSetDto,
+    val set: SetDto,
     @SerializedName("subtypes")
     val subtypes: List<String>,
     @SerializedName("supertype")
     val supertype: String,
     @SerializedName("tcgplayer")
-    val tcgplayer: Tcgplayer,
+    val tcgplayer: TcgplayerDto,
     @SerializedName("types")
     val types: List<String>,
     @SerializedName("weaknesses")
-    val weaknesses: List<Weaknesse>
+    val weaknesses: List<WeaknesseDto>
+)
+
+fun CardDto.asEntity() = CardEntity(
+    id = id,
+//    abilities = abilities?.map { it.asEntity() }?.toMutableList(),
+//    artist = artist,
+//    attacks = attacks?.map { it.asEntity() }?.toMutableList(),
+//    convertedRetreatCost = convertedRetreatCost,
+//    evolvesFrom = evolvesFrom,
+//    evolvesTo = evolvesTo?.toMutableList(),
+//    flavorText = flavorText,
+//    hp = hp,
+    images = images.asEntity(),
+//    legalities = legalitiesDto.asEntity(),
+    name = name,
+//    nationalPokedexNumbers = nationalPokedexNumbers,
+//    number = number,
+//    rarity = rarity,
+//    retreatCost = retreatCost,
+//    rules = rules,
+//    set = set.asEntity(),
+//    subtypes = subtypes,
+//    supertype = supertype,
+//    tcgplayer = tcgplayer.asEntity(),
+//    types = types,
+//    weaknesses = weaknesses.map { it.asEntity() }
 )

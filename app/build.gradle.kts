@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -57,6 +59,9 @@ android {
 
     dependencies {
 
+        implementation(project(":paging"))
+
+
         //Android framework
         implementation("androidx.core:core-ktx:1.7.0")
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
@@ -67,7 +72,6 @@ android {
         implementation("androidx.compose.material3:material3:1.0.0-alpha11")
         implementation("androidx.navigation:navigation-compose:2.5.3")
         implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-        implementation("androidx.paging:paging-compose:3.2.0-rc01")
 
         //IMAGE
         implementation("io.coil-kt:coil-compose:2.2.2")

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Cardmarket(
     @SerializedName("prices")
-    val prices: Prices,
+    val pricesDto: PricesDto,
     @SerializedName("updatedAt")
     val updatedAt: String,
     @SerializedName("url")
