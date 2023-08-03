@@ -33,7 +33,7 @@ class CardSetDetailViewModel @Inject constructor(
         onLoadUpdated = {
             if (page != 1) {
                 _uiState.value =
-                    (_uiState.value as SetDetailUiState.Success).copy(isPaginating = true).copy()
+                    (_uiState.value as SetDetailUiState.Success).copy(isPaginating = paginationReachedEnd.not()).copy()
 
             }
         },

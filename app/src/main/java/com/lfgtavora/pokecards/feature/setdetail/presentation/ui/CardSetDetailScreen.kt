@@ -1,6 +1,8 @@
 package com.lfgtavora.pokecards.feature.setdetail.presentation.ui
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,11 +11,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Info
@@ -23,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -166,18 +172,23 @@ private fun CardList(
                 onClick = onCardClick
             )
         }
-        item {
+        if (isPaginating) {
+            item(span = { GridItemSpan(4) }) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
+        item(span = { GridItemSpan(4) }) {
             LaunchedEffect(cards.size > 0) {
-                Log.i("paging", "CardList: reachedend")
                 onLoadMore()
             }
         }
-        item {
-            if (isPaginating) {
-                CircularProgressIndicator()
-            }
-        }
-
     }
 
 }
@@ -192,11 +203,13 @@ private fun PokeCard(
 ) {
 
     Card(
-        shape = Shapes.None,
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
         ),
-        modifier = Modifier.clickable { onClick(id) }
+        shape = Shapes.None,
+        modifier = Modifier
+            .clip(RoundedCornerShape(4.dp))
+            .clickable { onClick(id) }
     ) {
         AsyncImage(
             model = thumbnail,
