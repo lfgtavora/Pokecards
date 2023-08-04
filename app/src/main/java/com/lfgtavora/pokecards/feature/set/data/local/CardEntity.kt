@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lfgtavora.pokecards.feature.set.data.response.Normal
+import com.lfgtavora.pokecards.feature.set.data.response.NormalDto
 
 @Entity(tableName = "cards")
 data class CardEntity(
@@ -69,7 +69,7 @@ class Tcgplayer(
 
 class PricesX(
     val holofoil: Holofoil?,
-    val normal: Normal?,
+    val normal: NormalDto?,
     val reverseHolofoil: ReverseHolofoil?
 )
 

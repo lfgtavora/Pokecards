@@ -16,5 +16,5 @@ data class CardSetsDto(
     val totalCount: Int
 )
 
-fun CardSetsDto.asEntity() =
-    cardSets.map(SetDto::asEntity)
+fun CardSetsDto.asDomain() =
+    cardSets.map(SetDto::asDomain)

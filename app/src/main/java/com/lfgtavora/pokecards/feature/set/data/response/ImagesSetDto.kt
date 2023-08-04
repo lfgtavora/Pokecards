@@ -2,6 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.lfgtavora.pokecards.feature.set.data.domain.ImagesSet
 import com.lfgtavora.pokecards.feature.set.data.local.ImagesSetEntity
 
 data class ImagesSetDto(
@@ -11,4 +12,4 @@ data class ImagesSetDto(
     val symbol: String
 )
 
-fun ImagesSetDto.asEntity() = ImagesSetEntity(logo, symbol)
+fun ImagesSetDto.asDomain() = ImagesSet(logo, symbol)

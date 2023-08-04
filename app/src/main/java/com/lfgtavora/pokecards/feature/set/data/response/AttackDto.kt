@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.Attack
+import com.lfgtavora.pokecards.feature.set.data.domain.Attack
 
 data class AttackDto(
     @SerializedName("convertedEnergyCost")
@@ -17,7 +17,7 @@ data class AttackDto(
     val text: String
 )
 
-fun AttackDto.asEntity() =
+fun AttackDto.asDomain() =
     Attack(
         convertedEnergyCost,
         cost,

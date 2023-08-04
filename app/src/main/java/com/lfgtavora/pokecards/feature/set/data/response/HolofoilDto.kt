@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.Holofoil
+import com.lfgtavora.pokecards.feature.set.data.domain.Holofoil
 import com.lfgtavora.pokecards.feature.set.data.local.Tcgplayer
 
 data class HolofoilDto(
@@ -18,7 +18,7 @@ data class HolofoilDto(
     val mid: Double
 )
 
-fun HolofoilDto.asEntity() = Holofoil(
+fun HolofoilDto.asDomain() = Holofoil(
     directLow,
     high,
     low,

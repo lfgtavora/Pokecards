@@ -2,19 +2,19 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.PricesX
+import com.lfgtavora.pokecards.feature.set.data.domain.PricesX
 
 data class PricesXDto(
     @SerializedName("holofoil")
     val holofoil: HolofoilDto?,
     @SerializedName("normal")
-    val normal: Normal?,
+    val normal: NormalDto?,
     @SerializedName("reverseHolofoil")
     val reverseHolofoil: ReverseHolofoilDto?
 )
 
-fun PricesXDto.asEntity() = PricesX(
-    holofoil = holofoil?.asEntity(),
-    normal = normal,
-    reverseHolofoil = reverseHolofoil?.asEntity()
+fun PricesXDto.asDomain() = PricesX(
+    holofoil = holofoil?.asDomain(),
+    normal = normal?.asDomain(),
+    reverseHolofoil = reverseHolofoil?.asDomain()
 )

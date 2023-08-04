@@ -1,17 +1,17 @@
 package com.lfgtavora.pokecards.feature.setdetail.presentation.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lfgtavora.pokecards.feature.set.data.domain.Card
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
-import com.lfgtavora.pokecards.feature.set.data.response.CardDto
 import com.lfgtavora.pokecards.pagination.DefaultPaginator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +23,7 @@ class CardSetDetailViewModel @Inject constructor(
 
     private var setId: String = checkNotNull(savedStateHandle["id"])
     private var page = 1
-    var paginationReachedEnd = false
+    private var paginationReachedEnd = false
 
     private var _uiState: MutableState<SetDetailUiState> = mutableStateOf(SetDetailUiState.Loading)
     val uiState = _uiState
@@ -45,6 +45,7 @@ class CardSetDetailViewModel @Inject constructor(
             page
         },
         onError = { error ->
+            Log.e("CARD_ERROR", error?.message.toString() )
             _uiState.value = SetDetailUiState.Error(error?.localizedMessage)
         },
         onSuccess = { result, newKey ->
@@ -64,7 +65,6 @@ class CardSetDetailViewModel @Inject constructor(
 
             }
             paginationReachedEnd = result.count < result.pageSize
-
         }
     )
 
@@ -82,7 +82,6 @@ class CardSetDetailViewModel @Inject constructor(
 
     companion object {
         private const val PAGE_SIZE = 32
-        private const val PREFETCH_DISTANCE = 10
     }
 
 }
@@ -91,7 +90,7 @@ sealed interface SetDetailUiState {
     object Loading : SetDetailUiState
     data class Error(val message: String?, val page: Int = 1) : SetDetailUiState
     data class Success(
-        val cards: MutableList<CardDto>,
+        val cards: MutableList<Card>,
         var isPaginating: Boolean = false
     ) : SetDetailUiState
 }

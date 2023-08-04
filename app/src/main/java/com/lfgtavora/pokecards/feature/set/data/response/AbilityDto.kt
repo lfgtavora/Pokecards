@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.Ability
+import com.lfgtavora.pokecards.feature.set.data.domain.Ability
 
 data class AbilityDto(
     @SerializedName("name")
@@ -13,4 +13,4 @@ data class AbilityDto(
     val type: String
 )
 
-fun AbilityDto.asEntity() = Ability(name, text, type)
+fun AbilityDto.asDomain() = Ability(name, text, type)

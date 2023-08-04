@@ -35,10 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.lfgtavora.pokecards.feature.set.data.response.CardDto
 import com.lfgtavora.pokecards.feature.setdetail.presentation.viewmodel.CardSetDetailViewModel
 import com.lfgtavora.pokecards.feature.setdetail.presentation.viewmodel.SetDetailUiState
 import com.lfgtavora.pokecards.R
+import com.lfgtavora.pokecards.feature.set.data.domain.Card
 
 @Composable
 internal fun CardSetDetailScreenRoute(
@@ -147,7 +147,7 @@ fun CardSetDetailScreen(
 
 @Composable
 private fun CardList(
-    cards: MutableList<CardDto>,
+    cards: MutableList<Card>,
     isPaginating: Boolean = false,
     onCardClick: (String) -> Unit,
     onLoadMore: () -> Unit,
@@ -167,7 +167,7 @@ private fun CardList(
         ) { card ->
             PokeCard(
                 id = card.id,
-                thumbnail = card.images.small,
+                thumbnail = card.images?.small ?: "",
                 name = card.name,
                 onClick = onCardClick
             )

@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.Images
+import com.lfgtavora.pokecards.feature.set.data.domain.Images
 
 data class ImagesCardDto(
     @SerializedName("large")
@@ -11,4 +11,4 @@ data class ImagesCardDto(
     val small: String
 )
 
-fun ImagesCardDto.asEntity() = Images(large, small)
+fun ImagesCardDto.asDomain() = Images(large, small)

@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.Legalities
+import com.lfgtavora.pokecards.feature.set.data.domain.Legalities
 
 data class LegalitiesDto(
     @SerializedName("expanded")
@@ -11,4 +11,4 @@ data class LegalitiesDto(
     val unlimited: String,
 )
 
-fun LegalitiesDto.asEntity() = Legalities(expanded, unlimited)
+fun LegalitiesDto.asDomain() = Legalities(expanded, unlimited)

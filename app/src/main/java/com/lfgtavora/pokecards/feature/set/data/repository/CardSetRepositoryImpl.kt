@@ -1,10 +1,10 @@
 package com.lfgtavora.pokecards.feature.set.data.repository
 
 import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataSource
-import com.lfgtavora.pokecards.feature.set.data.local.SetEntity
+import com.lfgtavora.pokecards.feature.set.data.domain.PaginationCard
+import com.lfgtavora.pokecards.feature.set.data.domain.Set
 import com.lfgtavora.pokecards.feature.set.data.response.CardSetsDto
-import com.lfgtavora.pokecards.feature.set.data.response.PaginationCardsDto
-import com.lfgtavora.pokecards.feature.set.data.response.asEntity
+import com.lfgtavora.pokecards.feature.set.data.response.asDomain
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -29,18 +29,20 @@ data class CardSetRepositoryImpl @Inject constructor(
     override fun paginateSets(
         page: Int,
         pageSize: Int
-    ): Flow<List<SetEntity>> = flow {
+    ): Flow<List<Set>> = flow {
         emit(
             pokemonTcgRemoteDataSource.paginateSets(page, pageSize)
         )
-    }.map(CardSetsDto::asEntity).flowOn(dispatcher)
+    }.map(CardSetsDto::asDomain).flowOn(dispatcher)
 
     override suspend fun paginateCards(
         setId: String,
         page: Int,
         pageSize: Int
-    ): Result<PaginationCardsDto> = runCatching {
-        pokemonTcgRemoteDataSource.paginateCards(setId, page, pageSize)
+    ): Result<PaginationCard> = runCatching {
+        pokemonTcgRemoteDataSource
+            .paginateCards(setId, page, pageSize)
+            .asDomain()
     }
 
 

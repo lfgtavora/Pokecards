@@ -2,6 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.lfgtavora.pokecards.feature.set.data.domain.PaginationCard
 
 data class PaginationCardsDto(
     @SerializedName("count")
@@ -15,3 +16,12 @@ data class PaginationCardsDto(
     @SerializedName("totalCount")
     val totalCount: Int
 )
+
+fun PaginationCardsDto.asDomain() =
+    PaginationCard(
+        count = count,
+        data = data.map { it.asDomain() },
+        page = page,
+        pageSize = pageSize,
+        totalCount = totalCount
+    )

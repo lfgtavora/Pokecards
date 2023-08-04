@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.ReverseHolofoil
+import com.lfgtavora.pokecards.feature.set.data.domain.ReverseHolofoil
 
 data class ReverseHolofoilDto(
     @SerializedName("directLow")
@@ -17,7 +17,7 @@ data class ReverseHolofoilDto(
     val mid: Double
 )
 
-fun ReverseHolofoilDto.asEntity() = ReverseHolofoil(
+fun ReverseHolofoilDto.asDomain() = ReverseHolofoil(
     directLow,
     high,
     low,

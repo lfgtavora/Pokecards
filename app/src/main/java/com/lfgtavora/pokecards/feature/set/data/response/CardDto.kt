@@ -2,7 +2,7 @@ package com.lfgtavora.pokecards.feature.set.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.lfgtavora.pokecards.feature.set.data.local.CardEntity
+import com.lfgtavora.pokecards.feature.set.data.domain.Card
 
 data class CardDto(
     @SerializedName("abilities")
@@ -52,31 +52,31 @@ data class CardDto(
     @SerializedName("types")
     val types: List<String>,
     @SerializedName("weaknesses")
-    val weaknesses: List<WeaknesseDto>
+    val weaknesses: List<WeaknesseDto>?
 )
 
-fun CardDto.asEntity() = CardEntity(
+fun CardDto.asDomain() = Card(
     id = id,
-//    abilities = abilities?.map { it.asEntity() }?.toMutableList(),
-//    artist = artist,
-//    attacks = attacks?.map { it.asEntity() }?.toMutableList(),
-//    convertedRetreatCost = convertedRetreatCost,
-//    evolvesFrom = evolvesFrom,
-//    evolvesTo = evolvesTo?.toMutableList(),
-//    flavorText = flavorText,
-//    hp = hp,
-    images = images.asEntity(),
-//    legalities = legalitiesDto.asEntity(),
+    abilities = abilities?.map { it.asDomain() },
+    artist = artist,
+    attacks = attacks?.map { it.asDomain() },
+    convertedRetreatCost = convertedRetreatCost,
+    evolvesFrom = evolvesFrom,
+    evolvesTo = evolvesTo,
+    flavorText = flavorText,
+    hp = hp,
+    images = images?.asDomain(),
+    legalities = legalitiesDto?.asDomain(),
     name = name,
-//    nationalPokedexNumbers = nationalPokedexNumbers,
-//    number = number,
-//    rarity = rarity,
-//    retreatCost = retreatCost,
-//    rules = rules,
-//    set = set.asEntity(),
-//    subtypes = subtypes,
-//    supertype = supertype,
-//    tcgplayer = tcgplayer.asEntity(),
-//    types = types,
-//    weaknesses = weaknesses.map { it.asEntity() }
+    nationalPokedexNumbers = nationalPokedexNumbers,
+    number = number,
+    rarity = rarity,
+    retreatCost = retreatCost,
+    rules = rules,
+    set = set?.asDomain(),
+    subtypes = subtypes,
+    supertype = supertype,
+    tcgplayer = tcgplayer?.asDomain(),
+    types = types,
+    weaknesses = weaknesses?.map { it.asDomain() },
 )

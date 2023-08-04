@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.lfgtavora.pokecards.feature.set.data.domain.Set
 import com.lfgtavora.pokecards.feature.set.data.local.SetEntity
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.FeedUiState
 import com.lfgtavora.pokecards.feature.set.presentation.viewmodel.SetViewModel
@@ -66,7 +67,7 @@ fun CardSetsScreen(
 
 @Composable
 fun CardSetsList(
-    setEntityList: List<SetEntity>,
+    setEntityList: List<Set>,
     onClick: (String, String) -> Unit,
 ) {
     LazyVerticalGrid(
@@ -88,7 +89,7 @@ fun CardSetsList(
 @OptIn(ExperimentalMaterial3Api::class)
 private fun CardSetItem(
     onClick: (String, String) -> Unit,
-    item: SetEntity
+    item: Set
 ) {
     Card(modifier = Modifier
         .clip(RoundedCornerShape(10.dp))
