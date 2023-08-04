@@ -3,7 +3,6 @@ package com.lfgtavora.pokecards.feature.set.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lfgtavora.pokecards.feature.set.data.domain.Set
-import com.lfgtavora.pokecards.feature.set.data.local.SetEntity
 import com.lfgtavora.pokecards.feature.set.domain.usecase.GetAllSetsByDateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

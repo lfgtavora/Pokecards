@@ -9,7 +9,6 @@ import com.lfgtavora.pokecards.feature.set.data.datasource.PokemonTcgRemoteDataS
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepository
 import com.lfgtavora.pokecards.feature.set.data.repository.CardSetRepositoryImpl
 import com.lfgtavora.pokecards.feature.set.domain.usecase.GetAllSetsByDateUseCase
-import com.lfgtavora.pokecards.feature.set.domain.usecase.GetAllSetsByDateUseCaseImpl
 import com.lfgtavora.pokecards.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -50,7 +49,7 @@ object AppModule {
     @Provides
     fun provideGetAllSetsByDateUseCaseImpl(
         cardSetRepository: CardSetRepository
-    ): GetAllSetsByDateUseCase = GetAllSetsByDateUseCaseImpl(cardSetRepository)
+    ): GetAllSetsByDateUseCase = GetAllSetsByDateUseCase(cardSetRepository)
 
 
     @Singleton

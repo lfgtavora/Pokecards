@@ -63,8 +63,8 @@ data class Prices(
 )
 
 data class Images(
-    val large: String,
-    val small: String
+    val large: String?,
+    val small: String?
 )
 
 data class Legalities(

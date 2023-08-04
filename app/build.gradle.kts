@@ -100,5 +100,9 @@ android {
         androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.2.0")
         debugImplementation("androidx.compose.ui:ui-tooling:1.2.0")
         debugImplementation("androidx.compose.ui:ui-test-manifest:1.2.0")
+        testImplementation("org.amshove.kluent:kluent-android:1.73")
     }
+}
+dependencies {
+    testImplementation("junit:junit:4.12")
 }

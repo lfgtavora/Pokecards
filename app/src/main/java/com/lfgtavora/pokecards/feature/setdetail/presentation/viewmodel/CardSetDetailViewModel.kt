@@ -45,8 +45,7 @@ class CardSetDetailViewModel @Inject constructor(
             page
         },
         onError = { error ->
-            Log.e("CARD_ERROR", error?.message.toString() )
-            _uiState.value = SetDetailUiState.Error(error?.localizedMessage)
+             _uiState.value = SetDetailUiState.Error(error?.localizedMessage)
         },
         onSuccess = { result, newKey ->
             if (page == 1)

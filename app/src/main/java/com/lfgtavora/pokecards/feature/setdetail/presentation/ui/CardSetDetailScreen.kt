@@ -167,7 +167,7 @@ private fun CardList(
         ) { card ->
             PokeCard(
                 id = card.id,
-                thumbnail = card.images?.small ?: "",
+                thumbnail = card.images?.small ?: card.images?.large ?: "",
                 name = card.name,
                 onClick = onCardClick
             )
